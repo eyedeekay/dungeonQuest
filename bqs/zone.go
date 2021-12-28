@@ -19,24 +19,24 @@ type Zone struct {
 	Incoming      []int
 	exitCh        chan struct{}
 
-	Logger        *log.Logger
+	Logger *log.Logger
 }
 
 func NewZone(zx, zy int, bch chan *Event, ech chan struct{}, m *Map, logger *log.Logger) *Zone {
 	return &Zone{
-		ID: fmt.Sprintf("%v-%v", zx, zy),
-		ZX: zx,
-		ZY: zy,
-		Map: m,
-		PlayersMap: make(map[int]*Player),
-		NPCMap: make(map[int]*NPC),
-		ItemsMap: make(map[int]*Item),
-		MobsMap: make(map[int]*Mob),
+		ID:            fmt.Sprintf("%v-%v", zx, zy),
+		ZX:            zx,
+		ZY:            zy,
+		Map:           m,
+		PlayersMap:    make(map[int]*Player),
+		NPCMap:        make(map[int]*NPC),
+		ItemsMap:      make(map[int]*Item),
+		MobsMap:       make(map[int]*Mob),
 		EntitiesIndex: make(map[int]string),
-		EventCh: make(chan *Event, 500),
-		exitCh: ech,
-		broadcastCh: bch,
-		Logger: logger,
+		EventCh:       make(chan *Event, 500),
+		exitCh:        ech,
+		broadcastCh:   bch,
+		Logger:        logger,
 	}
 }
 
@@ -471,7 +471,3 @@ func (z *Zone) getEntityById(id int) EntityInterface {
 		return nil
 	}
 }
-
-
-
-
