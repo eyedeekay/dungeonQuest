@@ -3,11 +3,13 @@ basic: conf/BrowserQuest
 	go build
 
 run: basic
-	./dungeonQuest -client conf/BrowserQuest/
+	./dungeonQuest -client ./conf/BrowserQuest/
 
 conf/BrowserQuest:
-	git clone https://github.com/mozilla/BrowserQuest.git conf/BrowserQuest
-	cp BrowserQuest/client/config/config_build.json-dist BrowserQuest/client/config/config_local.json
+	git clone https://github.com/CertifiedWebMaster/BrowserQuest conf/BrowserQuest
+
+conf/BrowserQuest/client/config/config_local.json:
+	cp conf/BrowserQuest/client/config/config_build.json-dist conf/BrowserQuest/client/config/config_local.json
 
 
 VERSION=0.0.08
@@ -19,7 +21,7 @@ GOARCH?="amd64"
 
 ARG=-v -tags netgo -ldflags '-w -extldflags "-static"'
 
-BINARY=dungeonquest
+BINARY=dungeonQuest
 SIGNER=hankhill19580@gmail.com
 CONSOLEPOSTNAME=IRC
 USER_GH=eyedeekay
@@ -51,7 +53,8 @@ bsd:
 	GOOS=freebsd GOARCH=amd64 make build su3
 	GOOS=openbsd GOARCH=amd64 make build su3
 
-dep:
+dep: conf/BrowserQuest conf/BrowserQuest/client/config/config_local.json
+	mkdir -p conf/lib/
 	cp "$(HOME)/Workspace/GIT_WORK/i2p.i2p/build/shellservice.jar" conf/lib/shellservice.jar -v
 
 su3:
@@ -62,6 +65,7 @@ su3:
 		-autostart=true \
 		-clientname=$(BINARY)-$(GOOS)-$(GOARCH) \
 		-consolename="$(BINARY) - $(CONSOLEPOSTNAME)" \
+		-consoleurl="http://127.0.0.1:7681/index.html" \
 		-name="$(BINARY)-$(GOOS)-$(GOARCH)" \
 		-delaystart="1" \
 		-desc="`cat desc`" \
@@ -129,3 +133,9 @@ index:
 	pandoc README.md >> index.html
 	@echo "</body>" >> index.html
 	@echo "</html>" >> index.html
+
+docker:
+	docker build -t $(BINARY)-$(GOOS)-$(GOARCH) .
+
+docker-run:
+	docker run -d --net=host `	-p 7681:7681 $(BINARY)-$(GOOS)-$(GOARCH)

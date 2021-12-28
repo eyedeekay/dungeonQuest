@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"path/filepath"
 	"strings"
 
 	"github.com/labstack/echo"
@@ -22,11 +23,27 @@ var confFilePath = flag.String("config", "./config.json", "configuration file pa
 var clientDir = flag.String("client", "./BrowserQuest", "BrowserQuest root directory to serve if provided")
 var clientReqPrefix = flag.String("prefix", "/game", "request url prefix when client is provided, cannot be '/' ")
 var useTLS = flag.Bool("tls", false, "use TLS")
+var shortPort = flag.String("port", "7681", "port to present the plugin homepage on, actually a link to the game.")
 
 var wide = []string{"inbound.length=1", "outbound.length=1",
 	"inbound.lengthVariance=0", "outbound.lengthVariance=0",
 	"inbound.backupQuantity=1", "outbound.backupQuantity=1",
 	"inbound.quantity=4", "outbound.quantity=4"}
+
+func hello(w http.ResponseWriter, req *http.Request) {
+	scheme := "http://"
+	if *useTLS {
+		scheme = "https://"
+	}
+	b32, err := ioutil.ReadFile("dungeonquest.i2p.public.txt")
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	addr := fmt.Sprintf("%s%s/game/client/index.html", scheme, string(b32))
+	link := fmt.Sprintf("<a href=\"%s\">%s</a>", addr, addr)
+	fmt.Fprintf(w, link)
+}
 
 func main() {
 	flag.Parse()
@@ -65,13 +82,17 @@ func main() {
 		defer e.Listener.Close()
 	}
 
+	server := http.ServeMux{}
+	server.HandleFunc("/index.html", hello)
+	go http.ListenAndServe(fmt.Sprintf("127.0.0.1:%s", *shortPort), &server)
+
 	if *clientDir != "" {
-		bytes, err := ioutil.ReadFile("BrowserQuest/client/config/config_local.json")
+		bytes, err := ioutil.ReadFile(filepath.Join(*clientDir, "/client/config/config_local.json"))
 		if err != nil {
 			log.Fatal(err)
 		}
 		fixed := strings.Replace(string(bytes), "Set local dev websocket host here", e.Listener.Addr().(i2pkeys.I2PAddr).Base32(), -1)
-		err = ioutil.WriteFile("BrowserQuest/client/config/config_local.json", []byte(fixed), 0644)
+		err = ioutil.WriteFile(filepath.Join(*clientDir, "/client/config/config_local.json"), []byte(fixed), 0644)
 		if err != nil {
 			log.Fatal(err)
 		}

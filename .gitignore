@@ -1,2 +1,5 @@
 dungeonQuest
 BrowserQuest
+*.crt
+*.crl
+*.pem
