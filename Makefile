@@ -160,8 +160,8 @@ index:
 	@echo "</body>" >> index.html
 	@echo "</html>" >> index.html
 
-docker:
-	docker build -t $(BINARY)-$(GOOS)-$(GOARCH) .
+docker: dep
+	docker build -t dungeonquest .
 
 docker-run:
-	docker run -d --net=host `	-p 7681:7681 $(BINARY)-$(GOOS)-$(GOARCH)
+	docker run --restart=always -d --name dungeonQuest --net=host -v $(PWD)/conf/:/home/dungeonQuest dungeonquest
