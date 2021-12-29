@@ -154,8 +154,9 @@ func hello(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 	addr := fmt.Sprintf("%s%s:8000/game/client/index.html", scheme, string(b32))
-	link := fmt.Sprintf("<a href=\"%s\">%s</a>", addr, addr)
-	fmt.Fprintf(w, link)
+	//link := fmt.Sprintf("<a href=\"%s\">%s</a>", addr, addr)
+	http.Redirect(w, req, addr, http.StatusFound)
+	//fmt.Fprintf(w, link)
 }
 
 func main() {
