@@ -1,15 +1,31 @@
 
-basic: conf/BrowserQuest
+BQ_VERSION=https://github.com/CamposBruno/browserquest
+#BQ_VERSION=https://github.com/CylonicRaider/LeetQuest
+
+basic: dep
 	go build
 
 run: basic
 	./dungeonQuest -client ./conf/BrowserQuest/
 
 conf/BrowserQuest:
-	git clone https://github.com/CertifiedWebMaster/BrowserQuest conf/BrowserQuest
+	git clone $(BQ_VERSION) conf/BrowserQuest
 
-conf/BrowserQuest/client/config/config_local.json:
-	cp conf/BrowserQuest/client/config/config_build.json-dist conf/BrowserQuest/client/config/config_local.json
+bq:
+	cd conf/BrowserQuest && \
+		git pull && \
+		npm install #&& \
+		#npm run build
+
+mapset:
+	cd conf/BrowserQuest #&& \
+		#npm run build-maps
+
+conf/BrowserQuest/client/config/config_local.json: bq mapset
+	#mkdir -p conf/BrowserQuest/client/config/
+	#cp conf/BrowserQuest/config.default.json conf/BrowserQuest/client/config/config_local.json
+	#cp conf/BrowserQuest/client/config/config_local.json conf/BrowserQuest/config.json
+	#cp conf/BrowserQuest/client/config/config_build.json-dist conf/BrowserQuest/client/config/config_local.json
 
 
 VERSION=0.0.08
@@ -33,6 +49,10 @@ build: dep
 clean:
 	rm -f $(BINARY)-plugin plugin $(BINARY)-*zip -r
 	rm -f *.su3 *.zip $(BINARY)-$(GOOS)-$(GOARCH) $(BINARY)-*
+	git clean -xdf
+
+distclean: clean
+	rm -rfv conf/BrowserQuest
 
 all: windows linux osx bsd
 
@@ -73,7 +93,7 @@ su3:
 		-icondata=icon/icon.png \
 		-updateurl="http://idk.i2p/$(BINARY)/$(BINARY)-$(GOOS)-$(GOARCH).su3" \
 		-website="http://idk.i2p/$(BINARY)/" \
-		-command="$(BINARY)-$(GOOS)-$(GOARCH) -conf \"\$$PLUGIN/catbox-i2p.conf\"" \
+		-command="$(BINARY)-$(GOOS)-$(GOARCH)" \
 		-license=AGPL \
 		-res=conf/
 	unzip -o $(BINARY)-$(GOOS)-$(GOARCH).zip -d $(BINARY)-$(GOOS)-$(GOARCH)-zip

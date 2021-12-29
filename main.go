@@ -47,13 +47,6 @@ func hello(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 	flag.Parse()
-	config, err := gs.LoadConf(*confFilePath)
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println(config)
-	bqs := gs.NewBQS(config)
-
 	e := echo.New()
 	e.Use(middleware.Recover())
 	sam, err := sam3.NewSAM("127.0.0.1:7656")
@@ -76,6 +69,33 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	if *clientDir != "" {
+		log.Println("Adjusting config file")
+		bytes, err := ioutil.ReadFile(filepath.Join(*clientDir, "/client/config/config_local.json"))
+		if err != nil {
+			log.Fatal(err)
+		}
+		log.Println("Adjusting config file", string(bytes))
+		fixed := strings.Replace(string(bytes), "localhost", e.Listener.Addr().(i2pkeys.I2PAddr).Base32(), -1)
+		log.Println("Adjusted config file", fixed)
+		err = ioutil.WriteFile(filepath.Join(*clientDir, "/client/config/config_local.json"), []byte(fixed), 0644)
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = ioutil.WriteFile(filepath.Join(*clientDir, "/client/config/config_build.json"), []byte(fixed), 0644)
+		if err != nil {
+			log.Fatal(err)
+		}
+		e.Static(*clientReqPrefix, *clientDir)
+	}
+	config, err := gs.LoadConf(*confFilePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(config)
+	bqs := gs.NewBQS(config)
+
+	e.Any("/", bqs.ToEchoHandler())
 
 	if *useTLS {
 		e.TLSListener = tls.NewListener(e.Listener, &tls.Config{})
@@ -85,20 +105,6 @@ func main() {
 	server := http.ServeMux{}
 	server.HandleFunc("/index.html", hello)
 	go http.ListenAndServe(fmt.Sprintf("127.0.0.1:%s", *shortPort), &server)
-
-	if *clientDir != "" {
-		bytes, err := ioutil.ReadFile(filepath.Join(*clientDir, "/client/config/config_local.json"))
-		if err != nil {
-			log.Fatal(err)
-		}
-		fixed := strings.Replace(string(bytes), "Set local dev websocket host here", e.Listener.Addr().(i2pkeys.I2PAddr).Base32(), -1)
-		err = ioutil.WriteFile(filepath.Join(*clientDir, "/client/config/config_local.json"), []byte(fixed), 0644)
-		if err != nil {
-			log.Fatal(err)
-		}
-		e.Static(*clientReqPrefix, *clientDir)
-	}
-	e.Any("/", bqs.ToEchoHandler())
 
 	if *useTLS {
 		addr := fmt.Sprintf("%v", e.TLSListener.Addr().(i2pkeys.I2PAddr).Base32())
