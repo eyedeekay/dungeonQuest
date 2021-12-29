@@ -24,7 +24,10 @@ mapset:
 conf/config.json:
 	cp -v config.json conf/config.json
 
-conf/BrowserQuest/client/config/config_local.json: bq mapset conf/config.json
+conf/maps:
+	cp -vr maps conf/maps
+
+conf/BrowserQuest/client/config/config_local.json: bq mapset conf/config.json conf/maps
 	#mkdir -p conf/BrowserQuest/client/config/
 	#cp conf/BrowserQuest/config.default.json conf/BrowserQuest/client/config/config_local.json
 	#cp conf/BrowserQuest/client/config/config_local.json conf/BrowserQuest/config.json
@@ -96,7 +99,7 @@ su3:
 		-icondata=icon/icon.png \
 		-updateurl="http://idk.i2p/$(BINARY)/$(BINARY)-$(GOOS)-$(GOARCH).su3" \
 		-website="http://idk.i2p/$(BINARY)/" \
-		-command="$(BINARY)-$(GOOS)-$(GOARCH) -config \$$PLUGIN/config.json -client \$$PLUGIN/BrowserQuest" \
+		-command="$(BINARY)-$(GOOS)-$(GOARCH)" \
 		-license=MPL \
 		-res=conf/
 	unzip -o $(BINARY)-$(GOOS)-$(GOARCH).zip -d $(BINARY)-$(GOOS)-$(GOARCH)-zip
