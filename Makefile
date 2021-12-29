@@ -28,7 +28,7 @@ conf/BrowserQuest/client/config/config_local.json: bq mapset
 	#cp conf/BrowserQuest/client/config/config_build.json-dist conf/BrowserQuest/client/config/config_local.json
 
 
-VERSION=0.0.08
+VERSION=0.0.01
 CGO_ENABLED=0
 export CGO_ENABLED=0
 
@@ -39,7 +39,7 @@ ARG=-v -tags netgo -ldflags '-w -extldflags "-static"'
 
 BINARY=dungeonQuest
 SIGNER=hankhill19580@gmail.com
-CONSOLEPOSTNAME=IRC
+CONSOLEPOSTNAME=MMORPG
 USER_GH=eyedeekay
 
 build: dep
@@ -94,7 +94,7 @@ su3:
 		-updateurl="http://idk.i2p/$(BINARY)/$(BINARY)-$(GOOS)-$(GOARCH).su3" \
 		-website="http://idk.i2p/$(BINARY)/" \
 		-command="$(BINARY)-$(GOOS)-$(GOARCH)" \
-		-license=AGPL \
+		-license=MPL \
 		-res=conf/
 	unzip -o $(BINARY)-$(GOOS)-$(GOARCH).zip -d $(BINARY)-$(GOOS)-$(GOARCH)-zip
 
@@ -140,7 +140,7 @@ download-su3s:
 download-single-su3:
 	wget -N -c "https://github.com/$(USER_GH)/$(BINARY)/releases/download/$(VERSION)/$(BINARY)-$(GOOS)-$(GOARCH).su3"
 
-release: clean all version upload-all
+release: all version upload-all
 
 index:
 	@echo "<!DOCTYPE html>" > index.html
