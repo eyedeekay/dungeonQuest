@@ -6,7 +6,7 @@ basic: dep
 	go build
 
 run: basic
-	./dungeonQuest -client ./conf/BrowserQuest/
+	./dungeonQuest -i2p=true -client=./conf/BrowserQuest/
 
 conf/BrowserQuest:
 	git clone $(BQ_VERSION) conf/BrowserQuest

@@ -32,9 +32,11 @@ var wide = []string{"inbound.length=1", "outbound.length=1",
 	"inbound.backupQuantity=1", "outbound.backupQuantity=1",
 	"inbound.quantity=4", "outbound.quantity=4"}
 
+var e *echo.Echo
+
 func main() {
 	flag.Parse()
-	e := echo.New()
+	e = echo.New()
 	e.Use(middleware.Recover())
 	if *useI2P {
 		sam, err := sam3.NewSAM("127.0.0.1:7656")
@@ -64,8 +66,8 @@ func main() {
 			log.Fatal(err)
 		}
 	}
-	if *clientDir != "" {
-		log.Println("Adjusting config file")
+	if *clientDir != "" && *useI2P {
+		log.Println("Adjusting config file,", *clientDir, "/client/config/config_local.json")
 		bytes, err := ioutil.ReadFile(filepath.Join(*clientDir, "/client/config/config_local.json"))
 		if err != nil {
 			log.Fatal(err)
@@ -91,22 +93,31 @@ func main() {
 	bqs := gs.NewBQS(config)
 
 	e.Any("/", bqs.ToEchoHandler())
-
+	addrString := e.Listener.Addr().String()
 	if *useTLS {
-		e.TLSListener = tls.NewListener(e.Listener, certgen(e.Listener.Addr().(i2pkeys.I2PAddr).Base32()))
-		defer e.Listener.Close()
+		if *useI2P {
+			addrString = e.Listener.Addr().(i2pkeys.I2PAddr).Base32()
+			e.TLSListener = tls.NewListener(e.Listener, certgen(addrString))
+			defer e.Listener.Close()
+		} else {
+			addrString = e.Listener.Addr().String()
+			e.TLSListener = tls.NewListener(e.Listener, certgen(addrString))
+			defer e.Listener.Close()
+		}
 	}
 
-	server := http.ServeMux{}
-	server.HandleFunc("/index.html", hello)
-	go http.ListenAndServe(fmt.Sprintf("127.0.0.1:%s", *shortPort), &server)
+	if *useI2P {
+		server := http.ServeMux{}
+		server.HandleFunc("/index.html", hello)
+		go http.ListenAndServe(fmt.Sprintf("127.0.0.1:%s", *shortPort), &server)
+	}
 
 	if *useTLS {
-		addr := fmt.Sprintf("%v", e.TLSListener.Addr().(i2pkeys.I2PAddr).Base32())
+		addr := fmt.Sprintf("%v", addrString)
 		log.Println("Server is running at https://" + addr + ":8000")
 		e.Logger.Fatal(http.Serve(e.TLSListener, e))
 	} else {
-		addr := fmt.Sprintf("%v", e.Listener.Addr().(i2pkeys.I2PAddr).Base32())
+		addr := fmt.Sprintf("%v", addrString)
 		log.Println("Server is running at http://" + addr + ":8000")
 		e.Logger.Fatal(http.Serve(e.Listener, e))
 	}
