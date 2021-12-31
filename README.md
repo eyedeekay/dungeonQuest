@@ -14,13 +14,19 @@ Configuration
 -------------
 
 ```
-  -config string
-        configuration file path (default "./config.json")
+Usage of ./dungeonQuest:
   -client string
-        BrowserQuest root directory to serve if provided
+    	BrowserQuest root directory to serve if provided (default "./BrowserQuest")
+  -config string
+    	configuration file path (default "./config.json")
+  -i2p
+    	use I2P
+  -port string
+    	port to present the plugin homepage on, actually a link to the game. (default "7681")
   -prefix string
-        request url prefix when client is provided, cannot be '/'  (default "/game")
-
+    	request url prefix when client is provided, cannot be '/'  (default "/game")
+  -tls
+    	use TLS (default true)
 ```
 
 Deployment
@@ -42,8 +48,36 @@ go build main.go
 ./main -config /path/to/config.json -client /path/to/BrowserQuest 
 ```
 
+### docker
+
+```
+docker build -t gobrowserquest .
+docker run --restart=always -d --name dungeonQuest -v $(PWD)/conf/:/home/dungeonQuest gobrowserquest
+```
+
 then you can play game at `http://{HOST}:{PORT}/game/client/index.html`
 
+### I2P Plugin
+
+- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
+
+### Docker Container with I2P
+
+```
+docker build -t gobrowserquest .
+docker run --restart=always --net=host -d --name dungeonQuest -v $(PWD)/conf/:/home/dungeonQuest gobrowserquest
+```
+
+```
+then you can play game at `http://{BASE32}:8000/game/client/index.html`
+```
 
 TODO
 ----------
