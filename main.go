@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net"
 	"net/http"
 	"path/filepath"
 	"strings"
@@ -24,6 +25,7 @@ var clientDir = flag.String("client", "./BrowserQuest", "BrowserQuest root direc
 var clientReqPrefix = flag.String("prefix", "/game", "request url prefix when client is provided, cannot be '/' ")
 var useTLS = flag.Bool("tls", true, "use TLS")
 var shortPort = flag.String("port", "7681", "port to present the plugin homepage on, actually a link to the game.")
+var useI2P = flag.Bool("i2p", false, "use I2P")
 
 var wide = []string{"inbound.length=1", "outbound.length=1",
 	"inbound.lengthVariance=0", "outbound.lengthVariance=0",
@@ -34,25 +36,33 @@ func main() {
 	flag.Parse()
 	e := echo.New()
 	e.Use(middleware.Recover())
-	sam, err := sam3.NewSAM("127.0.0.1:7656")
-	if err != nil {
-		log.Fatal(err)
-	}
-	eepkeys, err := sam.EnsureKeyfile("dungeonquest.i2p.private")
-	if err != nil {
-		log.Fatal(err)
-	}
-	err = ioutil.WriteFile("dungeonquest.i2p.public.txt", []byte(eepkeys.Addr().Base32()), 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
-	session, err := sam.NewStreamSession("dungeonquest", eepkeys, wide)
-	if err != nil {
-		log.Fatal(err)
-	}
-	e.Listener, err = session.Listen()
-	if err != nil {
-		log.Fatal(err)
+	if *useI2P {
+		sam, err := sam3.NewSAM("127.0.0.1:7656")
+		if err != nil {
+			log.Fatal(err)
+		}
+		eepkeys, err := sam.EnsureKeyfile("dungeonquest.i2p.private")
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = ioutil.WriteFile("dungeonquest.i2p.public.txt", []byte(eepkeys.Addr().Base32()), 0644)
+		if err != nil {
+			log.Fatal(err)
+		}
+		session, err := sam.NewStreamSession("dungeonquest", eepkeys, wide)
+		if err != nil {
+			log.Fatal(err)
+		}
+		e.Listener, err = session.Listen()
+		if err != nil {
+			log.Fatal(err)
+		}
+	} else {
+		var err error
+		e.Listener, err = net.Listen("tcp", ":7681")
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 	if *clientDir != "" {
 		log.Println("Adjusting config file")
