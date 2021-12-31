@@ -156,7 +156,7 @@ index:
 	@echo "  <link rel=\"stylesheet\" type=\"text/css\" href =\"/style.css\" />" >> index.html
 	@echo "</head>" >> index.html
 	@echo "<body>" >> index.html
-	pandoc README.md >> index.html
+	sed 's|goBrowserQuest|dungeonQuest|g' README.md | sed 's|SineYuan|eyedeekay|g' | pandoc  >> index.html
 	@echo "</body>" >> index.html
 	@echo "</html>" >> index.html
 

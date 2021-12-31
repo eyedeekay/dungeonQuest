@@ -36,6 +36,10 @@ Deployment
 ```
 git clone https://github.com/mozilla/BrowserQuest.git
 
+## or obtain an updated fork here:
+
+git clone https://github.com/CamposBruno/browserquest
+
 cp BrowserQuest/client/config/config_local.json-dist BrowserQuest/client/config/config_local.json 
 ```
 edit `BrowserQuest/client/config/config_local.json` to set server host and port.
@@ -59,20 +63,21 @@ then you can play game at `http://{HOST}:{PORT}/game/client/index.html`
 
 ### I2P Plugin
 
-- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
-- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
-- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
-- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
-- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
-- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
-- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
-- [http://idk.i2p/dungeonQuest/dungeonQuest--.su3](http://idk.i2p/dungeonQuest/dungeonQuest--.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest-darwin-amd64.su3](http://idk.i2p/dungeonQuest/dungeonQuest-darwin-amd64.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest-darwin-arm64.su3](http://idk.i2p/dungeonQuest/dungeonQuest-darwin-arm64-.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest-linux-amd64.su3](http://idk.i2p/dungeonQuest/dungeonQuest-linux-amd64.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest-linux-arm64.su3](http://idk.i2p/dungeonQuest/dungeonQuest-linux-arm64.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest-linux-386.su3](http://idk.i2p/dungeonQuest/dungeonQuest-linux-386.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest-freebsd-amd64.su3](http://idk.i2p/dungeonQuest/dungeonQuest-freebsd-amd64.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest-openbsd-amd64.su3](http://idk.i2p/dungeonQuest/dungeonQuest-openbsd-amd64-.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest-windows-amd64.su3](http://idk.i2p/dungeonQuest/dungeonQuest-windows-amd64.su3)
+- [http://idk.i2p/dungeonQuest/dungeonQuest-windows-386.su3](http://idk.i2p/dungeonQuest/dungeonQuest-windows-386.su3)
 
 ### Docker Container with I2P
 
 ```
 docker build -t gobrowserquest .
-docker run --restart=always --net=host -d --name dungeonQuest -v $(PWD)/conf/:/home/dungeonQuest gobrowserquest
+docker run --restart=always --net=host -d --name dungeonQuest -v $(PWD)/conf/:/home/dungeonQuest gobrowserquest dungeonQuest -i2p -client /home/dungeonQuest/BrowserQuest -config /home/dungeonQuest/config.json
 ```
 
 ```
