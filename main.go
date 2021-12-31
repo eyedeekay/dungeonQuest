@@ -114,11 +114,11 @@ func main() {
 
 	if *useTLS {
 		addr := fmt.Sprintf("%v", addrString)
-		log.Println("Server is running at https://" + addr + ":8000")
+		log.Println("Server is running at https://" + addr)
 		e.Logger.Fatal(http.Serve(e.TLSListener, e))
 	} else {
 		addr := fmt.Sprintf("%v", addrString)
-		log.Println("Server is running at http://" + addr + ":8000")
+		log.Println("Server is running at http://" + addr)
 		e.Logger.Fatal(http.Serve(e.Listener, e))
 	}
 

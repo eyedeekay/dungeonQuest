@@ -21,7 +21,7 @@ func hello(w http.ResponseWriter, req *http.Request) {
 		addr := fmt.Sprintf("%s%s:8000/game/client/index.html", scheme, string(b32))
 		http.Redirect(w, req, addr, http.StatusFound)
 	} else {
-		addr := fmt.Sprintf("%s%s:8000/game/client/index.html", scheme, e.Listener.Addr().String())
+		addr := fmt.Sprintf("%s%s:%s/game/client/index.html", scheme, e.Listener.Addr().String(), *shortPort)
 		http.Redirect(w, req, addr, http.StatusFound)
 	}
 
