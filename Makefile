@@ -99,7 +99,7 @@ su3:
 		-icondata=icon/icon.png \
 		-updateurl="http://idk.i2p/$(BINARY)/$(BINARY)-$(GOOS)-$(GOARCH).su3" \
 		-website="http://idk.i2p/$(BINARY)/" \
-		-command="$(BINARY)-$(GOOS)-$(GOARCH)" \
+		-command="$(BINARY)-$(GOOS)-$(GOARCH) -i2p=true" \
 		-license=MPL \
 		-res=conf/
 	unzip -o $(BINARY)-$(GOOS)-$(GOARCH).zip -d $(BINARY)-$(GOOS)-$(GOARCH)-zip
