@@ -8,7 +8,7 @@
 <h1 id="dungeonquest-server-documentation">dungeonQuest server documentation</h1>
 <p>go implementation for <a href="https://github.com/mozilla/BrowserQuest">BrowserQuest</a> server</p>
 <h2 id="installation">Installation</h2>
-<pre><code>go get github.com/SineYuan/dungeonQuest</code></pre>
+<pre><code>go get github.com/eyedeekay/dungeonQuest</code></pre>
 <h2 id="configuration">Configuration</h2>
 <pre><code>Usage of ./dungeonQuest:
   -client string
@@ -27,10 +27,14 @@
 <h3 id="client">client</h3>
 <pre><code>git clone https://github.com/mozilla/BrowserQuest.git
 
+## or obtain an updated fork here:
+
+git clone https://github.com/CamposBruno/browserquest
+
 cp BrowserQuest/client/config/config_local.json-dist BrowserQuest/client/config/config_local.json </code></pre>
 <p>edit <code>BrowserQuest/client/config/config_local.json</code> to set server host and port.</p>
 <h3 id="server">server</h3>
-<pre><code>cd $GOPATH/src/github.com/SineYuan/dungeonQuest
+<pre><code>cd $GOPATH/src/github.com/eyedeekay/dungeonQuest
 go build main.go
 ./main -config /path/to/config.json -client /path/to/BrowserQuest </code></pre>
 <h3 id="docker">docker</h3>
@@ -51,7 +55,7 @@ docker run --restart=always -d --name dungeonQuest -v $(PWD)/conf/:/home/dungeon
 </ul>
 <h3 id="docker-container-with-i2p">Docker Container with I2P</h3>
 <pre><code>docker build -t gobrowserquest .
-docker run --restart=always --net=host -d --name dungeonQuest -v $(PWD)/conf/:/home/dungeonQuest gobrowserquest</code></pre>
+docker run --restart=always --net=host -d --name dungeonQuest -v $(PWD)/conf/:/home/dungeonQuest gobrowserquest dungeonQuest -i2p -client /home/dungeonQuest/BrowserQuest -config /home/dungeonQuest/config.json</code></pre>
 <pre><code>then you can play game at `http://{BASE32}:8000/game/client/index.html`</code></pre>
 <h2 id="todo">TODO</h2>
 <p>dungeonQuest have yet to implement all the function of BrowserQuest server. welcome to forks</p>
