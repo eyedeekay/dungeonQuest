@@ -81,7 +81,7 @@ bsd:
 
 dep: conf/BrowserQuest conf/BrowserQuest/client/config/config_local.json
 	mkdir -p conf/lib/
-	cp "$(HOME)/Workspace/GIT_WORK/i2p.i2p/build/shellservice.jar" conf/lib/shellservice.jar -v
+#	cp "$(HOME)/build/shellservice.jar" conf/lib/shellservice.jar -v
 
 su3:
 	i2p.plugin.native -name=$(BINARY)-$(GOOS)-$(GOARCH) \
