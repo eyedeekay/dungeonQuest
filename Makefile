@@ -34,7 +34,7 @@ conf/BrowserQuest/client/config/config_local.json: bq mapset conf/config.json co
 	#cp conf/BrowserQuest/client/config/config_build.json-dist conf/BrowserQuest/client/config/config_local.json
 
 
-VERSION=0.0.01
+VERSION=0.0.02
 CGO_ENABLED=0
 export CGO_ENABLED=0
 
