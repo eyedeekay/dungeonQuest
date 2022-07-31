@@ -1,13 +1,14 @@
-goBrowserQuest server documentation
-===================================
+dungeonQuest
+============
 
-go implementation for [BrowserQuest](https://github.com/mozilla/BrowserQuest) server
+go implementation for [BrowserQuest](https://github.com/mozilla/BrowserQuest) server,
+with special features for use with I2P.
 
 Installation
 -------------
 
 ```
-go get github.com/SineYuan/goBrowserQuest
+go get github.com/eyedeekay/dungeonQuest
 ```
 
 Configuration
