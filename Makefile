@@ -152,16 +152,7 @@ download-single-su3:
 release: all version upload-all
 
 index:
-	@echo "<!DOCTYPE html>" > index.html
-	@echo "<html>" >> index.html
-	@echo "<head>" >> index.html
-	@echo "  <title>$(BINARY) - $(CONSOLEPOSTNAME)</title>" >> index.html
-	@echo "  <link rel=\"stylesheet\" type=\"text/css\" href =\"/style.css\" />" >> index.html
-	@echo "</head>" >> index.html
-	@echo "<body>" >> index.html
-	sed 's|goBrowserQuest|dungeonQuest|g' README.md | sed 's|SineYuan|eyedeekay|g' | pandoc  >> index.html
-	@echo "</body>" >> index.html
-	@echo "</html>" >> index.html
+	edgar
 
 docker: dep
 	docker build -t dungeonquest .

@@ -7,6 +7,7 @@
     <meta name="description" content="dungeonQuest" />
     <meta name="keywords" content="master" />
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="showhider.css" />
   </head>
   <body>
     <div id="navbar">
@@ -30,9 +31,10 @@
       </div>
     </div>
     <h1>
-      <a href="/">
-        dungeonQuest
+      <a href="#dungeonquest" rel="nofollow">
+        <span></span>
       </a>
+      dungeonQuest
     </h1>
     <p>
       go implementation for
@@ -43,11 +45,17 @@
       with special features for use with I2P.
     </p>
     <h2>
+      <a href="#installation" rel="nofollow">
+        <span></span>
+      </a>
       Installation
     </h2>
     <pre><code>go get github.com/eyedeekay/dungeonQuest
 </code></pre>
     <h2>
+      <a href="#configuration" rel="nofollow">
+        <span></span>
+      </a>
       Configuration
     </h2>
     <pre><code>Usage of ./dungeonQuest:
@@ -65,9 +73,15 @@
     	use TLS (default true)
 </code></pre>
     <h2>
+      <a href="#deployment" rel="nofollow">
+        <span></span>
+      </a>
       Deployment
     </h2>
     <h3>
+      <a href="#client" rel="nofollow">
+        <span></span>
+      </a>
       client
     </h3>
     <pre><code>git clone https://github.com/mozilla/BrowserQuest.git
@@ -86,6 +100,9 @@ cp BrowserQuest/client/config/config_local.json-dist BrowserQuest/client/config/
       to set server host and port.
     </p>
     <h3>
+      <a href="#server" rel="nofollow">
+        <span></span>
+      </a>
       server
     </h3>
     <pre><code>cd $GOPATH/src/github.com/SineYuan/goBrowserQuest
@@ -93,6 +110,9 @@ go build main.go
 ./main -config /path/to/config.json -client /path/to/BrowserQuest 
 </code></pre>
     <h3>
+      <a href="#docker" rel="nofollow">
+        <span></span>
+      </a>
       docker
     </h3>
     <pre><code>docker build -t gobrowserquest .
@@ -105,6 +125,9 @@ docker run --restart=always -d --name dungeonQuest -v $(PWD)/conf/:/home/dungeon
       </code>
     </p>
     <h3>
+      <a href="#i2p-plugin" rel="nofollow">
+        <span></span>
+      </a>
       I2P Plugin
     </h3>
     <ul>
@@ -155,6 +178,9 @@ docker run --restart=always -d --name dungeonQuest -v $(PWD)/conf/:/home/dungeon
       </li>
     </ul>
     <h3>
+      <a href="#docker-container-with-i2p" rel="nofollow">
+        <span></span>
+      </a>
       Docker Container with I2P
     </h3>
     <pre><code>docker build -t gobrowserquest .
@@ -163,6 +189,9 @@ docker run --restart=always --net=host -d --name dungeonQuest -v $(PWD)/conf/:/h
     <pre><code>then you can play game at `http://{BASE32}:8000/game/client/index.html`
 </code></pre>
     <h2>
+      <a href="#todo" rel="nofollow">
+        <span></span>
+      </a>
       TODO
     </h2>
     <p>
@@ -559,6 +588,7 @@ Exhibit B - "Incompatible With Secondary Licenses" Notice
     </div>
     <div>
       <a href="https://geti2p.net/">
+        <img src="i2plogo.png"></img>
         I2P
       </a>
     </div>
