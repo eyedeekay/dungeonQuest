@@ -4,6 +4,9 @@ dungeonQuest
 go implementation for [BrowserQuest](https://github.com/mozilla/BrowserQuest) server,
 with special features for use with I2P.
 
+STATUS: This project is maintained but not recieving any features. If you want to add
+features talk up SineYuan/goBrowserQuest which I used to make this.
+
 Installation
 -------------
 
