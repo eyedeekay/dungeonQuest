@@ -86,6 +86,7 @@ dep: conf/BrowserQuest conf/BrowserQuest/client/config/config_local.json
 SIGNER_DIR=$(HOME)/i2p-go-keys/
 
 su3:
+	rm -f config.yaml plugin.yaml
 	i2p.plugin.native -name=$(BINARY)-$(GOOS)-$(GOARCH) \
 		-signer=$(SIGNER) \
 		-signer-dir=$(SIGNER_DIR) \

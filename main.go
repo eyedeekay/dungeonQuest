@@ -15,7 +15,7 @@ import (
 	"github.com/labstack/echo/middleware"
 
 	"github.com/eyedeekay/sam3"
-	"github.com/eyedeekay/sam3/i2pkeys"
+	"github.com/eyedeekay/i2pkeys"
 
 	gs "github.com/SineYuan/goBrowserQuest/bqs"
 )
