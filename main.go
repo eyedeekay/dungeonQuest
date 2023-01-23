@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -11,6 +12,7 @@ import (
 	"strings"
 	"time"
 
+	magnetware "github.com/eyedeekay/magnetWare"
 	"github.com/eyedeekay/onramp"
 	"github.com/eyedeekay/unembed"
 	"github.com/labstack/echo"
@@ -40,8 +42,10 @@ func main() {
 	e.Server.ReadTimeout = time.Hour
 	e.Server.WriteTimeout = time.Hour
 	e.Server.ReadHeaderTimeout = time.Hour
+	mw := magnetware.NewMagnetWare(*clientDir)
+	e.Use(mw.EchoMagnet())
 	e.Use(middleware.Recover())
-	//e.GET("/index.html", helloFunc)
+	e.Use(middleware.Gzip())
 	var err error
 	garlic, err = onramp.NewGarlic("dungeonquest", *useI2P, onramp.OPT_WIDE)
 	if err != nil {
@@ -66,18 +70,17 @@ func main() {
 	}
 	log.Println(config)
 
-	//go func() {
-	bqs := gs.NewBQS(config)
-	e.Any("/", bqs.ToEchoHandler())
-	e.GET("/", helloFunc)
-	addrString := e.TLSListener.Addr().String()
-	log.Println("Server is running at https://" + addrString)
-	e.Logger.Fatal(http.Serve(e.TLSListener, e))
-	//}()
+	go func() {
+		bqs := gs.NewBQS(config)
+		e.Any("/", bqs.ToEchoHandler())
+		addrString := e.TLSListener.Addr().String()
+		log.Println("Server is running at https://" + addrString)
+		e.Logger.Fatal(http.Serve(e.TLSListener, e))
+	}()
 
-	//server := http.ServeMux{}
-	//server.HandleFunc("/index.html", hello)
-	//http.ListenAndServe(fmt.Sprintf("127.0.0.1:%s", *shortPort), &server)
+	server := http.ServeMux{}
+	server.HandleFunc("/", hello)
+	http.ListenAndServe(fmt.Sprintf("127.0.0.1:%s", *shortPort), &server)
 }
 
 func fixupDefaultDir() error {
@@ -109,7 +112,7 @@ func fixupConfigFiles() error {
 		return err
 	}
 	fixed := strings.Replace(string(bytes), "localhost", addr.Address.Base32(), -1)
-	fixed = strings.Replace(fixed, "    \"port\": 8000,\n", "    \"port\": 80,", -1)
+	fixed = strings.Replace(fixed, "    \"port\": 8000,\n", "    \"port\": 443,", -1)
 	log.Println("Adjusted config file", fixed)
 	err = ioutil.WriteFile(configPath, []byte(fixed), 0644)
 	if err != nil {
