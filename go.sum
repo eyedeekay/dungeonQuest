@@ -23,8 +23,8 @@ github.com/eyedeekay/onramp v0.0.0-20230116055507-c93b68c0ab01/go.mod h1:IYNLXoZ
 github.com/eyedeekay/sam3 v0.32.32/go.mod h1:qRA9KIIVxbrHlkj+ZB+OoxFGFgdKeGp1vSgPw26eOVU=
 github.com/eyedeekay/sam3 v0.33.5 h1:mY2MmEG4W35AOpG/G7DOdAhFZWRwFxlm+NmIoub1Xnw=
 github.com/eyedeekay/sam3 v0.33.5/go.mod h1:sPtlI4cRm7wD0UywOzLPvvdY1G++vBSK3n+jiIGqWlU=
-github.com/eyedeekay/unembed v0.0.0-20220521030224-e33fac302930 h1:ysNMUwNIQJk8KBmum7XGxiWB2hfCN7zvrECYelqKGoE=
-github.com/eyedeekay/unembed v0.0.0-20220521030224-e33fac302930/go.mod h1:A6dZU88muI132XMrmdM0+cc2yIuwmhwgRfyrU54DjPc=
+github.com/eyedeekay/unembed v0.0.0-20230123014222-9916b121855b h1:QyCSwbHpkJtKGvIvHsvvlbDkf7/3a8qUlaa4rEr8myQ=
+github.com/eyedeekay/unembed v0.0.0-20230123014222-9916b121855b/go.mod h1:A6dZU88muI132XMrmdM0+cc2yIuwmhwgRfyrU54DjPc=
 github.com/getlantern/context v0.0.0-20190109183933-c447772a6520/go.mod h1:L+mq6/vvYHKjCX2oez0CgEAJmbq1fbb/oNJIWQkBybY=
 github.com/getlantern/errors v1.0.1/go.mod h1:l+xpFBrCtDLpK9qNjxs+cHU6+BAdlBaxHqikB6Lku3A=
 github.com/getlantern/go-socks5 v0.0.0-20171114193258-79d4dd3e2db5/go.mod h1:kGHRXch95rnGLHjER/GhhFiHvfnqNz7KqWD9kGfATHY=

@@ -80,8 +80,6 @@ bsd:
 	GOOS=openbsd GOARCH=amd64 make build su3
 
 dep:  conf/BrowserQuest/client/config/config_local.json
-	mkdir -p conf/lib/
-#	cp "$(HOME)/build/shellservice.jar" conf/lib/shellservice.jar -v
 
 SIGNER_DIR=$(HOME)/i2p-go-keys/
 

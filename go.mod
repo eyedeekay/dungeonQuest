@@ -6,7 +6,7 @@ require (
 	github.com/SineYuan/goBrowserQuest v0.0.0-20181227111843-ab6c4a824b1a
 	github.com/bitly/go-simplejson v0.5.0
 	github.com/eyedeekay/onramp v0.0.0-20230116055507-c93b68c0ab01
-	github.com/eyedeekay/unembed v0.0.0-20220521030224-e33fac302930
+	github.com/eyedeekay/unembed v0.0.0-20230123014222-9916b121855b
 	github.com/gorilla/websocket v1.5.0
 	github.com/labstack/echo v3.3.10+incompatible
 )

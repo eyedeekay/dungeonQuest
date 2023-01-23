@@ -3,13 +3,13 @@ package main
 import (
 	"embed"
 	"flag"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/eyedeekay/onramp"
 	"github.com/eyedeekay/unembed"
@@ -19,7 +19,7 @@ import (
 	gs "github.com/SineYuan/goBrowserQuest/bqs"
 )
 
-//go:embed conf/BrowserQuest
+//go:embed conf/BrowserQuest/*
 var defaultContent embed.FS
 
 //go:embed conf/BrowserQuest/client/config/config_local.json
@@ -37,25 +37,32 @@ var garlic *onramp.Garlic
 func main() {
 	flag.Parse()
 	e = echo.New()
+	e.Server.ReadTimeout = time.Hour
+	e.Server.WriteTimeout = time.Hour
+	e.Server.ReadHeaderTimeout = time.Hour
 	e.Use(middleware.Recover())
-	e.GET("/", helloFunc)
+	e.GET("/index.html", helloFunc)
 	var err error
 	garlic, err = onramp.NewGarlic("dungeonquest", *useI2P, onramp.OPT_WIDE)
 	if err != nil {
 		log.Fatal(err)
 	}
+	garlic.Timeout = time.Hour
+	garlic.StreamSession.Timeout = time.Hour
+	//garlic.StreamSession.SetReadDeadline(time.Now() + time.Hour)
 	e.TLSListener, err = garlic.ListenTLS()
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	if *clientDir != "" {
-		if err := fixupConfigFiles(); err != nil {
-			log.Fatal(err)
-		}
 		if err := fixupDefaultDir(); err != nil {
 			log.Fatal(err)
 		}
 		e.Static(*clientReqPrefix, *clientDir)
+		if err := fixupConfigFiles(); err != nil {
+			log.Fatal(err)
+		}
 	}
 	config, err := gs.LoadConf(*confFilePath)
 	if err != nil {
@@ -63,22 +70,23 @@ func main() {
 	}
 	log.Println(config)
 
-	go func() {
-		bqs := gs.NewBQS(config)
-		e.Any("/", bqs.ToEchoHandler())
-		addrString := e.TLSListener.Addr().String()
-		log.Println("Server is running at https://" + addrString)
-		e.Logger.Fatal(http.Serve(e.TLSListener, e))
-	}()
+	//go func() {
+	bqs := gs.NewBQS(config)
+	e.Any("/", bqs.ToEchoHandler())
+	addrString := e.TLSListener.Addr().String()
+	log.Println("Server is running at https://" + addrString)
+	e.Logger.Fatal(http.Serve(e.TLSListener, e))
+	//}()
 
-	server := http.ServeMux{}
-	server.HandleFunc("/index.html", hello)
-	http.ListenAndServe(fmt.Sprintf("127.0.0.1:%s", *shortPort), &server)
+	//server := http.ServeMux{}
+	//server.HandleFunc("/index.html", hello)
+	//http.ListenAndServe(fmt.Sprintf("127.0.0.1:%s", *shortPort), &server)
 }
 
 func fixupDefaultDir() error {
-	if _, err := os.Stat(*clientDir); os.IsNotExist(err) {
-		err := unembed.Unembed(defaultContent, *clientDir)
+	configPath := filepath.Join(*clientDir, "bin")
+	if _, err := os.Stat(configPath); os.IsNotExist(err) {
+		err := unembed.Unembed(defaultContent, *clientDir, "conf/BrowserQuest")
 		if err != nil {
 			return err
 		}
