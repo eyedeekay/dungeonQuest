@@ -79,7 +79,7 @@ bsd:
 	GOOS=freebsd GOARCH=amd64 make build su3
 	GOOS=openbsd GOARCH=amd64 make build su3
 
-dep: conf/BrowserQuest conf/BrowserQuest/client/config/config_local.json
+dep:  conf/BrowserQuest/client/config/config_local.json
 	mkdir -p conf/lib/
 #	cp "$(HOME)/build/shellservice.jar" conf/lib/shellservice.jar -v
 
@@ -103,7 +103,7 @@ su3:
 		-icondata=icon/icon.png \
 		-updateurl="http://idk.i2p/$(BINARY)/$(BINARY)-$(GOOS)-$(GOARCH).su3" \
 		-website="http://idk.i2p/$(BINARY)/" \
-		-command="$(BINARY)-$(GOOS)-$(GOARCH) -i2p=true" \
+		-command="$(BINARY)-$(GOOS)-$(GOARCH) -client=$$PLUGIN/BrowserQuest" \
 		-license=MPL \
 		-res=conf/
 	unzip -o $(BINARY)-$(GOOS)-$(GOARCH).zip -d $(BINARY)-$(GOOS)-$(GOARCH)-zip
