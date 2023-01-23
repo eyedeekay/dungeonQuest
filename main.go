@@ -41,7 +41,7 @@ func main() {
 	e.Server.WriteTimeout = time.Hour
 	e.Server.ReadHeaderTimeout = time.Hour
 	e.Use(middleware.Recover())
-	e.GET("/index.html", helloFunc)
+	//e.GET("/index.html", helloFunc)
 	var err error
 	garlic, err = onramp.NewGarlic("dungeonquest", *useI2P, onramp.OPT_WIDE)
 	if err != nil {
@@ -49,20 +49,16 @@ func main() {
 	}
 	garlic.Timeout = time.Hour
 	garlic.StreamSession.Timeout = time.Hour
-	//garlic.StreamSession.SetReadDeadline(time.Now() + time.Hour)
 	e.TLSListener, err = garlic.ListenTLS()
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	if *clientDir != "" {
-		if err := fixupDefaultDir(); err != nil {
-			log.Fatal(err)
-		}
-		e.Static(*clientReqPrefix, *clientDir)
-		if err := fixupConfigFiles(); err != nil {
-			log.Fatal(err)
-		}
+	if err := fixupDefaultDir(); err != nil {
+		log.Fatal(err)
+	}
+	e.Static(*clientReqPrefix, *clientDir)
+	if err := fixupConfigFiles(); err != nil {
+		log.Fatal(err)
 	}
 	config, err := gs.LoadConf(*confFilePath)
 	if err != nil {
@@ -73,6 +69,7 @@ func main() {
 	//go func() {
 	bqs := gs.NewBQS(config)
 	e.Any("/", bqs.ToEchoHandler())
+	e.GET("/", helloFunc)
 	addrString := e.TLSListener.Addr().String()
 	log.Println("Server is running at https://" + addrString)
 	e.Logger.Fatal(http.Serve(e.TLSListener, e))
@@ -112,6 +109,7 @@ func fixupConfigFiles() error {
 		return err
 	}
 	fixed := strings.Replace(string(bytes), "localhost", addr.Address.Base32(), -1)
+	fixed = strings.Replace(fixed, "    \"port\": 8000,\n", "    \"port\": 80,", -1)
 	log.Println("Adjusted config file", fixed)
 	err = ioutil.WriteFile(configPath, []byte(fixed), 0644)
 	if err != nil {

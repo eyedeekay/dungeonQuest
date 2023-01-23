@@ -9,7 +9,10 @@ run: basic
 	./dungeonQuest -i2p=true -client=./conf/BrowserQuest/
 
 conf/BrowserQuest:
-	git clone $(BQ_VERSION) conf/BrowserQuest
+	git clone --depth=1 $(BQ_VERSION) conf/BrowserQuest
+
+rmConfBrowserQuestGit:
+	rm -rf conf/BrowserQuest/.git
 
 bq:
 	cd conf/BrowserQuest && \
@@ -79,7 +82,7 @@ bsd:
 	GOOS=freebsd GOARCH=amd64 make build su3
 	GOOS=openbsd GOARCH=amd64 make build su3
 
-dep:  conf/BrowserQuest/client/config/config_local.json
+dep:  conf/BrowserQuest rmConfBrowserQuestGit conf/BrowserQuest/client/config/config_local.json
 
 SIGNER_DIR=$(HOME)/i2p-go-keys/
 

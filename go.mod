@@ -17,7 +17,6 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/eyedeekay/i2pkeys v0.33.0 // indirect
 	github.com/eyedeekay/sam3 v0.33.5 // indirect
-	github.com/kr/pretty v0.3.0 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
@@ -28,3 +27,5 @@ require (
 	golang.org/x/sys v0.4.0 // indirect
 	golang.org/x/text v0.6.0 // indirect
 )
+
+replace github.com/SineYuan/goBrowserQuest => ./

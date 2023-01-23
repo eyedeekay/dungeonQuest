@@ -1,13 +1,12 @@
 package bqs
 
 import (
-	"io/ioutil"
 	"encoding/json"
+	"io/ioutil"
 )
 
 type Config struct {
 	Host        string
-	Port        int
 	DebugLevel  string `json:"debug_level"`
 	MapFilePath string `json:"map_filepath"`
 }
