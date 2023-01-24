@@ -12,6 +12,7 @@ import (
 	"strings"
 	"time"
 
+	"fyne.io/systray"
 	magnetware "github.com/eyedeekay/magnetWare"
 	"github.com/eyedeekay/onramp"
 	"github.com/eyedeekay/unembed"
@@ -32,6 +33,7 @@ var clientDir = flag.String("client", "./conf/BrowserQuest", "BrowserQuest root 
 var clientReqPrefix = flag.String("prefix", "/game", "request url prefix when client is provided, cannot be '/' ")
 var shortPort = flag.String("port", "7681", "port to present the plugin homepage on, actually a link to the game.")
 var useI2P = flag.String("i2p", "127.0.0.1:7656", "The address of the SAMv3 API.")
+var tray = flag.Bool("systray", true, "Show a systray menu for joining and sharing the game")
 
 var e *echo.Echo
 var garlic *onramp.Garlic
@@ -76,6 +78,11 @@ func main() {
 		addrString := e.TLSListener.Addr().String()
 		log.Println("Server is running at https://" + addrString)
 		e.Logger.Fatal(http.Serve(e.TLSListener, e))
+	}()
+	go func() {
+		if *tray {
+			systray.Run(onReady, onExit)
+		}
 	}()
 
 	server := http.ServeMux{}
