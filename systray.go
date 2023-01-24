@@ -45,14 +45,14 @@ func onReady() {
 			case <-mBrowse.ClickedCh:
 				k, _ := garlic.Keys()
 				v := k.Address.Base32()
-				addr := strings.TrimSpace(fmt.Sprintf("http://%s", v))
+				addr := strings.TrimSpace(fmt.Sprintf("https://%s", v))
 				h := *clientDir
 				profileDir := filepath.Join(h, "dungeonCrawler")
 				go goi2pbrowser.BrowseApp(profileDir, addr)
 			case <-mCopy.ClickedCh:
 				k, _ := garlic.Keys()
 				v := k.Address.Base32()
-				addr := strings.TrimSpace(fmt.Sprintf("http://%s", v))
+				addr := strings.TrimSpace(fmt.Sprintf("https://%s", v))
 				clipboard.WriteAll(addr)
 			}
 			time.Sleep(time.Second)
