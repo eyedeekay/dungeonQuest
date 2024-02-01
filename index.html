@@ -4,91 +4,92 @@
       dungeonQuest
     </title>
     <meta name="author" content="eyedeekay" />
-    <meta name="description" content="dungeonQuest" />
+    <meta name="description" content="dungeonQues" />
     <meta name="keywords" content="master" />
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link rel="stylesheet" type="text/css" href="showhider.css" />
+    <link rel="stylesheet" type="text/css" href="darklight.css" />
   </head>
   <body>
-    <div id="navbar">
-      <a href="#shownav">
-        Show navigation
-      </a>
-      <div id="shownav">
-        <div id="hidenav">
-          <ul>
-            <li>
-              <a href="index.html">
-                index
-              </a>
-            </li>
-          </ul>
-          <br>
-          <a href="#hidenav">
-            Hide Navigation
-          </a>
+    <input type="checkbox" id="checkboxDarkLight">
+    <div class="container">
+      <div id="navbar">
+        <a href="#shownav">
+          Show navigation
+        </a>
+        <div id="shownav">
+          <div id="hidenav">
+            <ul>
+              <li>
+                <a href="..">
+                  Up one level ^
+                </a>
+              </li>
+              <li>
+                <a href="index.html">
+                  index
+                </a>
+              </li>
+              <li>
+                <a href="index.html">
+                  index.html
+                </a>
+              </li>
+            </ul>
+            <br>
+            <a href="#hidenav">
+              Hide Navigation
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-    <h1>
-      <a href="#dungeonquest" rel="nofollow">
-        <span></span>
+      <a id="returnhome" href="/">
+        /
       </a>
-      dungeonQuest
-    </h1>
-    <p>
-      go implementation for
-      <a href="https://github.com/mozilla/BrowserQuest" rel="nofollow">
-        BrowserQuest
-      </a>
-      server,
-      with special features for use with I2P.
-    </p>
-    <p>
-      STATUS: This project is maintained but not recieving any features. If you want to add
-      features talk up SineYuan/goBrowserQuest which I used to make this.
-    </p>
-    <h2>
-      <a href="#installation" rel="nofollow">
-        <span></span>
-      </a>
-      Installation
-    </h2>
-    <pre><code>go get github.com/eyedeekay/dungeonQuest
+      <h1>
+        dungeonQuest
+      </h1>
+      <p>
+        go implementation for
+        <a href="https://github.com/mozilla/BrowserQuest">
+          BrowserQuest
+        </a>
+        server,
+        with special features for use with I2P.
+      </p>
+      <p>
+        STATUS: This project is maintained but not recieving any features. If you want to add
+        features talk up SineYuan/goBrowserQuest which I used to make this.
+      </p>
+      <h2>
+        Installation
+      </h2>
+      <pre><code>go get github.com/eyedeekay/dungeonQuest
 </code></pre>
-    <h2>
-      <a href="#configuration" rel="nofollow">
-        <span></span>
-      </a>
-      Configuration
-    </h2>
-    <pre><code>Usage of ./dungeonQuest:
+      <h2>
+        Configuration
+      </h2>
+      <pre><code>Usage of ./dungeonQuest:
   -client string
-    	BrowserQuest root directory to serve if provided (default &#34;./BrowserQuest&#34;)
+    	BrowserQuest root directory to serve if provided (default &quot;./BrowserQuest&quot;)
   -config string
-    	configuration file path (default &#34;./config.json&#34;)
+    	configuration file path (default &quot;./config.json&quot;)
   -i2p
     	use I2P
   -port string
-    	port to present the plugin homepage on, actually a link to the game. (default &#34;7681&#34;)
+    	port to present the plugin homepage on, actually a link to the game. (default &quot;7681&quot;)
   -prefix string
-    	request url prefix when client is provided, cannot be &#39;/&#39;  (default &#34;/game&#34;)
+    	request url prefix when client is provided, cannot be '/'  (default &quot;/game&quot;)
   -tls
     	use TLS (default true)
 </code></pre>
-    <h2>
-      <a href="#deployment" rel="nofollow">
-        <span></span>
-      </a>
-      Deployment
-    </h2>
-    <h3>
-      <a href="#client" rel="nofollow">
-        <span></span>
-      </a>
-      client
-    </h3>
-    <pre><code>git clone https://github.com/mozilla/BrowserQuest.git
+      <h2>
+        Deployment
+      </h2>
+      <h3>
+        client
+      </h3>
+      <pre><code>git clone https://github.com/mozilla/BrowserQuest.git
 
 ## or obtain an updated fork here:
 
@@ -96,118 +97,117 @@ git clone https://github.com/CamposBruno/browserquest
 
 cp BrowserQuest/client/config/config_local.json-dist BrowserQuest/client/config/config_local.json 
 </code></pre>
-    <p>
-      edit
-      <code>
-        BrowserQuest/client/config/config_local.json
-      </code>
-      to set server host and port.
-    </p>
-    <h3>
-      <a href="#server" rel="nofollow">
-        <span></span>
-      </a>
-      server
-    </h3>
-    <pre><code>cd $GOPATH/src/github.com/SineYuan/goBrowserQuest
+      <p>
+        edit
+        <code>
+          BrowserQuest/client/config/config_local.json
+        </code>
+        to set server host and port.
+      </p>
+      <h3>
+        server
+      </h3>
+      <pre><code>cd $GOPATH/src/github.com/SineYuan/goBrowserQuest
 go build main.go
 ./main -config /path/to/config.json -client /path/to/BrowserQuest 
 </code></pre>
-    <h3>
-      <a href="#docker" rel="nofollow">
-        <span></span>
-      </a>
-      docker
-    </h3>
-    <pre><code>docker build -t gobrowserquest .
+      <h3>
+        docker
+      </h3>
+      <pre><code>docker build -t gobrowserquest .
 docker run --restart=always -d --name dungeonQuest -v $(PWD)/conf/:/home/dungeonQuest gobrowserquest
 </code></pre>
-    <p>
-      then you can play game at
-      <code>
-        http://{HOST}:{PORT}/game/client/index.html
-      </code>
-    </p>
-    <h3>
-      <a href="#i2p-plugin" rel="nofollow">
-        <span></span>
-      </a>
-      I2P Plugin
-    </h3>
-    <ul>
-      <li>
-        <a href="http://idk.i2p/dungeonQuest/dungeonQuest-darwin-amd64.su3" rel="nofollow">
-          http://idk.i2p/dungeonQuest/dungeonQuest-darwin-amd64.su3
-        </a>
-      </li>
-      <li>
-        <a href="http://idk.i2p/dungeonQuest/dungeonQuest-darwin-arm64-.su3" rel="nofollow">
-          http://idk.i2p/dungeonQuest/dungeonQuest-darwin-arm64.su3
-        </a>
-      </li>
-      <li>
-        <a href="http://idk.i2p/dungeonQuest/dungeonQuest-linux-amd64.su3" rel="nofollow">
-          http://idk.i2p/dungeonQuest/dungeonQuest-linux-amd64.su3
-        </a>
-      </li>
-      <li>
-        <a href="http://idk.i2p/dungeonQuest/dungeonQuest-linux-arm64.su3" rel="nofollow">
-          http://idk.i2p/dungeonQuest/dungeonQuest-linux-arm64.su3
-        </a>
-      </li>
-      <li>
-        <a href="http://idk.i2p/dungeonQuest/dungeonQuest-linux-386.su3" rel="nofollow">
-          http://idk.i2p/dungeonQuest/dungeonQuest-linux-386.su3
-        </a>
-      </li>
-      <li>
-        <a href="http://idk.i2p/dungeonQuest/dungeonQuest-freebsd-amd64.su3" rel="nofollow">
-          http://idk.i2p/dungeonQuest/dungeonQuest-freebsd-amd64.su3
-        </a>
-      </li>
-      <li>
-        <a href="http://idk.i2p/dungeonQuest/dungeonQuest-openbsd-amd64-.su3" rel="nofollow">
-          http://idk.i2p/dungeonQuest/dungeonQuest-openbsd-amd64.su3
-        </a>
-      </li>
-      <li>
-        <a href="http://idk.i2p/dungeonQuest/dungeonQuest-windows-amd64.su3" rel="nofollow">
-          http://idk.i2p/dungeonQuest/dungeonQuest-windows-amd64.su3
-        </a>
-      </li>
-      <li>
-        <a href="http://idk.i2p/dungeonQuest/dungeonQuest-windows-386.su3" rel="nofollow">
-          http://idk.i2p/dungeonQuest/dungeonQuest-windows-386.su3
-        </a>
-      </li>
-    </ul>
-    <h3>
-      <a href="#docker-container-with-i2p" rel="nofollow">
-        <span></span>
-      </a>
-      Docker Container with I2P
-    </h3>
-    <pre><code>docker build -t gobrowserquest .
+      <p>
+        then you can play game at
+        <code>
+          http://{HOST}:{PORT}/game/client/index.html
+        </code>
+      </p>
+      <h3>
+        I2P Plugin
+      </h3>
+      <ul>
+        <li>
+          <a href="http://idk.i2p/dungeonQuest/dungeonQuest-darwin-amd64.su3">
+            http://idk.i2p/dungeonQuest/dungeonQuest-darwin-amd64.su3
+          </a>
+        </li>
+        <li>
+          <a href="http://idk.i2p/dungeonQuest/dungeonQuest-darwin-arm64-.su3">
+            http://idk.i2p/dungeonQuest/dungeonQuest-darwin-arm64.su3
+          </a>
+        </li>
+        <li>
+          <a href="http://idk.i2p/dungeonQuest/dungeonQuest-linux-amd64.su3">
+            http://idk.i2p/dungeonQuest/dungeonQuest-linux-amd64.su3
+          </a>
+        </li>
+        <li>
+          <a href="http://idk.i2p/dungeonQuest/dungeonQuest-linux-arm64.su3">
+            http://idk.i2p/dungeonQuest/dungeonQuest-linux-arm64.su3
+          </a>
+        </li>
+        <li>
+          <a href="http://idk.i2p/dungeonQuest/dungeonQuest-linux-386.su3">
+            http://idk.i2p/dungeonQuest/dungeonQuest-linux-386.su3
+          </a>
+        </li>
+        <li>
+          <a href="http://idk.i2p/dungeonQuest/dungeonQuest-freebsd-amd64.su3">
+            http://idk.i2p/dungeonQuest/dungeonQuest-freebsd-amd64.su3
+          </a>
+        </li>
+        <li>
+          <a href="http://idk.i2p/dungeonQuest/dungeonQuest-openbsd-amd64-.su3">
+            http://idk.i2p/dungeonQuest/dungeonQuest-openbsd-amd64.su3
+          </a>
+        </li>
+        <li>
+          <a href="http://idk.i2p/dungeonQuest/dungeonQuest-windows-amd64.su3">
+            http://idk.i2p/dungeonQuest/dungeonQuest-windows-amd64.su3
+          </a>
+        </li>
+        <li>
+          <a href="http://idk.i2p/dungeonQuest/dungeonQuest-windows-386.su3">
+            http://idk.i2p/dungeonQuest/dungeonQuest-windows-386.su3
+          </a>
+        </li>
+      </ul>
+      <h3>
+        Docker Container with I2P
+      </h3>
+      <pre><code>docker build -t gobrowserquest .
 docker run --restart=always --net=host -d --name dungeonQuest -v $(PWD)/conf/:/home/dungeonQuest gobrowserquest dungeonQuest -i2p -client /home/dungeonQuest/BrowserQuest -config /home/dungeonQuest/config.json
 </code></pre>
-    <pre><code>then you can play game at `http://{BASE32}:8000/game/client/index.html`
+      <pre><code>then you can play game at `http://{BASE32}:8000/game/client/index.html`
 </code></pre>
-    <h2>
-      <a href="#todo" rel="nofollow">
-        <span></span>
-      </a>
-      TODO
-    </h2>
-    <p>
-      goBrowserQuest have yet to implement all the function of BrowserQuest server. welcome to forks
-    </p>
-    <div>
-      <a href="#show">
-        Show license
-      </a>
-      <div id="show">
-        <div id="hide">
-          <pre><code>Mozilla Public License Version 2.0
+      <h2>
+        TODO
+      </h2>
+      <p>
+        goBrowserQuest have yet to implement all the function of BrowserQuest server. welcome to forks
+      </p>
+      <div id="sourcecode">
+        <span id="sourcehead">
+          <strong>
+            Get the source code:
+          </strong>
+        </span>
+        <ul>
+          <li>
+            <a href="https://github.com/eyedeekay/dungeonQuest.git">
+              Source Repository: (https://github.com/eyedeekay/dungeonQuest.git)
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <a href="#show">
+          Show license
+        </a>
+        <div id="show">
+          <div id="hide">
+            <pre><code>Mozilla Public License Version 2.0
 ==================================
 
 1. Definitions
@@ -581,9 +581,10 @@ Exhibit B - "Incompatible With Secondary Licenses" Notice
   This Source Code Form is "Incompatible With Secondary Licenses", as
   defined by the Mozilla Public License, v. 2.0.
 </code></pre>
-          <a href="#hide">
-            Hide license
-          </a>
+            <a href="#hide">
+              Hide license
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -592,7 +593,7 @@ Exhibit B - "Incompatible With Secondary Licenses" Notice
     </div>
     <div>
       <a href="https://geti2p.net/">
-        <img src="i2plogo.png"></img>
+        <img class="i2plogo" src="i2plogo.png"></img>
         I2P
       </a>
     </div>
